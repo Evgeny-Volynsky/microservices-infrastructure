@@ -33,9 +33,11 @@ locals {
 
 data "k8sbootstrap_auth" "auth" {
   depends_on = [module.secgroup,module.server]
-
   server = module.server.k3s_external_url
   token  = local.token
+  timeouts {
+    create = "60m"
+  }
 }
 
 module "server" {
@@ -60,8 +62,7 @@ module "server" {
 
 module "agents" {
   source = "git::https://github.com/iuliacornea99/tf-k3s.git//k3s-openstack"
-
-  count = 2
+  count=1
 
   name               = "k3s-agent-${count.index + 1}"
   image_id           = openstack_images_image_v2.debian.image_id
@@ -120,7 +121,7 @@ output "kubeconfig" {
 }
 
 provider "kubernetes" {
-  host                   = module.server.k3s_url
+  host                   = module.server.k3s_external_url
   token                  = local.token
   cluster_ca_certificate = data.k8sbootstrap_auth.auth.ca_crt
 }

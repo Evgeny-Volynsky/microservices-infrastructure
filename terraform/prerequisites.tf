@@ -20,8 +20,8 @@ resource "openstack_networking_subnet_v2" "kubernetes" {
 
 resource "openstack_compute_flavor_v2" "server_flavor" {
   name  = "server-flavor"
-  ram   = "2048"
-  vcpus = "1"
+  ram   = "4096"
+  vcpus = "2"
   disk  = "20"
 
   extra_specs = {
@@ -32,7 +32,7 @@ resource "openstack_compute_flavor_v2" "server_flavor" {
 resource "openstack_compute_flavor_v2" "agent_flavor" {
   name  = "agent-flavor"
   ram   = "4096"
-  vcpus = "1"
+  vcpus = "2"
   disk  = "20"
 
   extra_specs = {
