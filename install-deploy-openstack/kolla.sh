@@ -43,14 +43,13 @@ kolla-ansible install-deps
 kolla-genpwd
 
 echo "Which IP address should we use for kolla_internal_vip_address?"
-IP_ADDRESS=$(gum choose --item.foreground 250 $(echo $(ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'))) 
-INTERFACE=$(ip -br addr | grep "$IP_ADDRESS" | cut -d' ' -f1) 
+export INTERFACE=$(ip -br addr | grep "$IP_ADDRESS" | cut -d' ' -f1) 
+
 
 echo $IP_ADDRESS
 echo $INTERFACE
 
 # Edit globals.yml file (stored in /etc/kolla/globals.yml)
-
 cat << EOF >  /etc/kolla/globals.yml
 workaround_ansible_issue_8743: yes
 kolla_base_distro: "ubuntu"

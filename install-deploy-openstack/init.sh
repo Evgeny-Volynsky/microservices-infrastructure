@@ -15,7 +15,7 @@ sudo chmod 700 /home/kolla/.ssh
 
 # Add public keys to kolla's authorized_keys
 echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDWO997ZygpIs+41KpvcZ9glH+vv/Wz0j59x1owYPyP6 iulia.cornea@tum.de' | sudo tee /home/kolla/.ssh/authorized_keys
-echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFhaKOV4rywl4Nlcl7Hk+v66hDNjaqTavSp4ng4IvatS ben' | sudo tee /home/kolla/.ssh/authorized_keys
+echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFhaKOV4rywl4Nlcl7Hk+v66hDNjaqTavSp4ng4IvatS ben' | sudo tee -a /home/kolla/.ssh/authorized_keys
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLczJN6THjOvvhQ1a61GKPgHAp3+eQohG5oPUzFtyyxK0IvPKOn9nULVhV7iJCmBPX5ZLikKqgWh+C+kvyw/QJID5UKcQxpqFaUnDmuOyS4T3QHYA4+aoBheYiaKiwoD8rgmyoJJ+7CY6Y8a62OLHCosYHemg0QhgOeeZC45mMgbFtECXhpbngq5fRx1D2Y23ddBBIIwkePh8SsJfu86VF9UXqsKn/Lbecx04SjRTtO+zClTKznvNZIkQx2ZKBuDyZ2tmg1kKh0oO0UnplJtM3gJiDWhQMx/Yn9/qSIIHbhff1xdkP2oVRCFqEzX2KKfDesOYkhTrfkyTg1Iw+i/a6ER1sJBSDcK6EsXpap50tIjHjqKu2NBOWR/wMJJy0Sxu8vSuBPD8/h0b/mIlHaLGZWOAp+XLDhBH5iPlaj9OSppQSEEJUDv1ba8p/rzL6FfiFDLKm5JgdV2vWEyyMBAu1GMsYmQNuOAGt5gXpIwP9mklpr3x6tCuZP53RtogCyeU= evgen@LAPTOP-565G8RJ0' | sudo tee -a /home/kolla/.ssh/authorized_keys
 
 # Set the correct permissions and ownership
@@ -28,9 +28,14 @@ echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *
 
 # Update package list
 sudo apt update
-
 # Install necessary packages
 sudo apt-get install -y git python3-dev libffi-dev gcc libssl-dev python3-selinux python3-setuptools python3-venv net-tools gum
+
+echo "Which Device should we use for cinder volumes?" 
+CINDER_PARTITION=$(gum choose --item.foreground 250 $(echo $(lsblk -o NAME -n -l -s| grep -E '^s|^v')))
+
+echo "Which IP address should we use for kolla_internal_vip_address?"
+export IP_ADDRESS=$(gum choose --item.foreground 250 $(echo $(ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'))) 
 
 sudo bash -c 'cat << EOF > /opt/network.sh
 #!/bin/bash
@@ -62,8 +67,6 @@ EOF'
 systemctl daemon-reload
 systemctl start tap-interface
 
-echo "Which Device should we use for cinder volumes?" 
-CINDER_PARTITION=$(gum choose --item.foreground 250 $(echo $(lsblk -o NAME -n -l -s| grep -E '^s|^v')))
 # Create a new partition for cinder
 sudo pvcreate /dev/$CINDER_PARTITION
 sudo vgcreate cinder-volumes /dev/$CINDER_PARTITION
@@ -74,7 +77,7 @@ chmod +x kolla.sh
 sudo chown kolla:kolla kolla.sh
 cp kolla.sh /home/kolla/
 cd /home/kolla
-sudo -u kolla ./kolla.sh
+sudo -u kolla  --preserve-env=IP_ADDRESS  ./kolla.sh
 
 # Add netowrking rules required on reboot for openstack
 sudo bash -c 'cat << EOF >> /opt/network.sh
@@ -87,6 +90,3 @@ EOF'
 
 systemctl daemon-reload
 systemctl start tap-interface
-
-# Gives permission to run openstack
-source /etc/kolla/admin-openrc.sh 
