@@ -19,7 +19,7 @@ resource "random_password" "bootstrap_token_secret" {
 
 
 module "secgroup" {
-  source = "git::https://github.com/nimbolus/tf-k3s.git//k3s-openstack/security-group"
+  source = "git::https://github.com/iuliacornea99/tf-k3s.git//k3s-openstack/security-group"
 }
 
 locals {
@@ -32,25 +32,25 @@ locals {
 }
 
 data "k8sbootstrap_auth" "auth" {
-  depends_on = [module.secgroup]
+  depends_on = [module.secgroup,module.server]
 
   server = module.server.k3s_external_url
   token  = local.token
 }
 
 module "server" {
-  source = "git::https://github.com/nimbolus/tf-k3s.git//k3s-openstack"
+  source = "git::https://github.com/iuliacornea99/tf-k3s.git//k3s-openstack"
 
   name               = "k3s-server"
-  image_id           = openstack_images_image_v2.rancheros.image_id
-  flavor_id          = openstack_compute_flavor_v2.server-flavor.flavor_id
+  image_id           = openstack_images_image_v2.debian.image_id
+  flavor_id          = openstack_compute_flavor_v2.server_flavor.flavor_id
   availability_zone  = var.availability_zone
   keypair_name       = openstack_compute_keypair_v2.k3s.name
   network_id         = openstack_networking_network_v2.kubernetes.id
   subnet_id          = openstack_networking_subnet_v2.kubernetes.id
   security_group_ids = [module.secgroup.id]
   data_volume_size   = 1
-  floating_ip_pool   = var.floating_ip_pool
+  floating_ip_pool   = openstack_networking_network_v2.external_net.name
 
   cluster_token          = random_password.cluster_token.result
   k3s_args                = concat(["server", "--cluster-init"], local.common_k3s_args)
@@ -59,20 +59,20 @@ module "server" {
 }
 
 module "agents" {
-  source = "git::https://github.com/nimbolus/tf-k3s.git//k3s-openstack"
+  source = "git::https://github.com/iuliacornea99/tf-k3s.git//k3s-openstack"
 
   count = 2
 
   name               = "k3s-agent-${count.index + 1}"
-  image_id           = openstack_images_image_v2.rancheros.image_id
-  flavor_id          = openstack_compute_flavor_v2.agent-flavor.flavor_id
+  image_id           = openstack_images_image_v2.debian.image_id
+  flavor_id          = openstack_compute_flavor_v2.agent_flavor.flavor_id
   availability_zone  = var.availability_zone
   keypair_name       = openstack_compute_keypair_v2.k3s.name
   network_id         = openstack_networking_network_v2.kubernetes.id
   subnet_id          = openstack_networking_subnet_v2.kubernetes.id
   security_group_ids = [module.secgroup.id]
   data_volume_size   = 5
-
+  floating_ip_pool   = openstack_networking_network_v2.external_net.name
   k3s_join_existing = true
   k3s_url           = module.server.k3s_url
   cluster_token     = random_password.cluster_token.result
@@ -128,6 +128,7 @@ provider "openstack" {
   user_name   = "admin"
   tenant_name = "admin"
   password    = "iulia"
-  auth_url    = "http://10.0.0.2:5000/v3"
+  auth_url    = "http://10.0.0.1:5000/v3"
   region      = "RegionOne"
 }
+
