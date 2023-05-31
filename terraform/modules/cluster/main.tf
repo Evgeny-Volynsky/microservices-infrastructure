@@ -35,17 +35,15 @@ data "k8sbootstrap_auth" "auth" {
   depends_on = [module.secgroup,module.server]
   server = module.server.k3s_external_url
   token  = local.token
-  timeouts {
-    create = "60m"
-  }
+  
 }
 
 module "server" {
   source = "git::https://github.com/iuliacornea99/tf-k3s.git//k3s-openstack"
 
   name               = "k3s-server"
-  image_id           = openstack_images_image_v2.debian.image_id
-  flavor_id          = openstack_compute_flavor_v2.server_flavor.flavor_id
+  image_id           = var.image_id
+  flavor_id          = var.server_flavor_id
   availability_zone  = var.availability_zone
   keypair_name       = openstack_compute_keypair_v2.k3s.name
   network_id         = openstack_networking_network_v2.kubernetes.id
@@ -65,8 +63,8 @@ module "agents" {
   count=1
 
   name               = "k3s-agent-${count.index + 1}"
-  image_id           = openstack_images_image_v2.debian.image_id
-  flavor_id          = openstack_compute_flavor_v2.agent_flavor.flavor_id
+  image_id           = var.image_id
+  flavor_id          = var.agent_flavor_id
   availability_zone  = var.availability_zone
   keypair_name       = openstack_compute_keypair_v2.k3s.name
   network_id         = openstack_networking_network_v2.kubernetes.id
