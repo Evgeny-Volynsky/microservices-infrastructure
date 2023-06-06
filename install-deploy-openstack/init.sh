@@ -81,11 +81,11 @@ sudo -u kolla  --preserve-env=IP_ADDRESS  ./kolla.sh
 
 # Add netowrking rules required on reboot for openstack
 sudo bash -c 'cat << EOF >> /opt/network.sh
-sudo ifconfig br-ex $EXT_NET_GATEWAY netmask 255.255.255.0 up
-sudo iptables -t nat -A POSTROUTING -s $EXT_NET_CIDR -o eth0 -j MASQUERADE
+sudo ifconfig br-ex \$EXT_NET_GATEWAY netmask 255.255.255.0 up
+sudo iptables -t nat -A POSTROUTING -s \$EXT_NET_CIDR -o eth0 -j MASQUERADE
 sudo sysctl -w net.ipv4.ip_forward=1
-iptables -A FORWARD -o eth0 -i br-ex -j ACCEPT
-iptables -A FORWARD -i eth0 -o br-ex -j ACCEPT
+sudo iptables -A FORWARD -o eth0 -i br-ex -j ACCEPT
+sudo iptables -A FORWARD -i eth0 -o br-ex -j ACCEPT
 EOF'
 
 systemctl daemon-reload
