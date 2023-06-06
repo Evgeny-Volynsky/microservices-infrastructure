@@ -90,4 +90,4 @@ sudo iptables -A FORWARD -i eth0 -o br-ex -j ACCEPT
 EOF'
 
 systemctl daemon-reload
-systemctl start tap-interface
+systemctl enable tap-interface
