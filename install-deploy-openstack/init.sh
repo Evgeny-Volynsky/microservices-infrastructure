@@ -55,6 +55,7 @@ sudo bash -c 'cat << EOF > /etc/systemd/system/tap-interface.service
 Description=Create persistent tap interface
 
 [Service]
+ExecStartPre=/bin/bash -c '(while ! ip link show br-ex > /dev/null 2>&1; do echo "Waiting for br-ex to be created..."; sleep 2; done); sleep 2'
 ExecStart=/opt/network.sh
 ExecStop=/sbin/ip link set dev br_ex_port down
 RemainAfterExit=yes
