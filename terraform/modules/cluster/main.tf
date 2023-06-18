@@ -126,8 +126,6 @@ provider "kubernetes" {
 provider "openstack" {
   user_name   = "admin"
   tenant_name = "admin"
-  password    = "iulia"
-  auth_url    = "http://10.0.0.1:5000/v3"
   region      = "RegionOne"
 }
 

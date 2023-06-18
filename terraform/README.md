@@ -5,10 +5,7 @@ To run the provided scripts, you have to install the following packages:
  ```bash
   sudo snap install terraform --classic
 ```
-- Terragrunt: 
-```bash
-  sudo snap install terragrunt
-```
+- Install Terragrunt from https://github.com/gruntwork-io/terragrunt/releases
 - Kubectl:
 ```bash
   snap install kubectl --classic
@@ -16,18 +13,25 @@ To run the provided scripts, you have to install the following packages:
 
 ## Deployment
 
+expose 2 environment variables:
+
+
+`OS_AUTH_URL`: should be in the pattern of `http://{CONTROL_NODE_IP}:5000/v3
+`OS_PASSWORD`: password set for admin user : `cat /etc/kolla/passwords.yml | grep "keystone_admin_password"`
+
+
 To deploy a k3s cluster with Terraform on OpenStack we have to do the following steps:
 
 ```bash
   cd microservices-infrastructure/terraform/cluster/prerequisites
-  terraform init
+  terragrunt init
   terragrunt plan -out prerequisites
   terragrunt apply prerequisites
 ```
 
 ```bash
   cd microservices-infrastructure/terraform/cluster
-  terraform init
+  terragrunt init
   terragrunt plan -out cluster
   terragrunt apply cluster
 ```
