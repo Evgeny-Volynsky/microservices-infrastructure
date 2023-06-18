@@ -31,8 +31,8 @@ sudo apt update
 # Install necessary packages
 sudo apt-get install -y git python3-dev libffi-dev gcc libssl-dev python3-selinux python3-setuptools python3-venv net-tools gum
 
-echo "Which Device should we use for cinder volumes?" 
-CINDER_PARTITION=$(gum choose --item.foreground 250 $(echo $(lsblk -o NAME -n -l -s| grep -E '^s|^v')))
+# echo "Which Device should we use for cinder volumes?" 
+# CINDER_PARTITION=$(gum choose --item.foreground 250 $(echo $(lsblk -o NAME -n -l -s| grep -E '^s|^v')))
 
 echo "Which IP address should we use for kolla_internal_vip_address?"
 export IP_ADDRESS=$(gum choose --item.foreground 250 $(echo $(ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'))) 
@@ -127,10 +127,10 @@ EOF'
 systemctl daemon-reload
 systemctl start tap-interface
 
-# Create a new partition for cinder
-sudo pvcreate /dev/$CINDER_PARTITION
-sudo vgcreate cinder-volumes /dev/$CINDER_PARTITION
-sudo vgs
+# # Create a new partition for cinder
+# sudo pvcreate /dev/$CINDER_PARTITION
+# sudo vgcreate cinder-volumes /dev/$CINDER_PARTITION
+# sudo vgs
 
 # Switch to kolla user
 chmod +x kolla-control.sh
