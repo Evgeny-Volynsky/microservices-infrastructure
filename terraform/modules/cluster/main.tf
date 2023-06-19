@@ -35,7 +35,6 @@ data "k8sbootstrap_auth" "auth" {
   depends_on = [module.secgroup,module.server]
   server = module.server.k3s_external_url
   token  = local.token
-  
 }
 
 module "server" {
@@ -76,6 +75,9 @@ module "agents" {
   k3s_url           = module.server.k3s_url
   cluster_token     = random_password.cluster_token.result
   k3s_args           = ["agent", "--node-label", "az=${var.availability_zone}"]
+  depends_on = [
+    openstack_networking_subnet_v2.kubernetes
+  ]
 }
 
 output "cluster_token" {
