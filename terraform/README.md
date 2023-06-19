@@ -36,6 +36,16 @@ To deploy a k3s cluster with Terraform on OpenStack we have to do the following 
   terragrunt apply cluster
 ```
 
+To retrieve the kubeconfig run
+
+```bash
+  terragrunt output kubeconfig
+  mkdir ~/.kube
+  touch ~/.kube/config
+```
+add contents of output into file
+
+
 To deploy a Kubernetes test app (located in microservices-infrastructure/test-deployment.yaml) 
 
 ```bash
