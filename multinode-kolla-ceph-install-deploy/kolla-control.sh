@@ -90,7 +90,7 @@ kolla-genpwd
 cat << EOF >  /etc/kolla/globals.yml
 workaround_ansible_issue_8743: yes
 kolla_base_distro: "ubuntu"
-kolla_internal_vip_address: "10.114.0.3"
+kolla_internal_vip_address: "$IP_ADDRESS"
 enable_haproxy: "no"
 neutron_external_interface: "br_ex_port"
 network_interface: "eth1"
