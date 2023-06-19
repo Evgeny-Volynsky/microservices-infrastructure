@@ -9,3 +9,7 @@ output "server_flavor_id" {
 output "agent_flavor_id" {
   value=openstack_compute_flavor_v2.agent_flavor.id
 }
+
+output "external_net_name" {
+  value=openstack_networking_network_v2.external_net.name
+}

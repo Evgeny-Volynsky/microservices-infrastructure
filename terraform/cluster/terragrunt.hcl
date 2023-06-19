@@ -10,4 +10,5 @@ inputs =  {
   image_id = dependency.prerequisites.outputs.image_id
   server_flavor_id = dependency.prerequisites.outputs.server_flavor_id
   agent_flavor_id = dependency.prerequisites.outputs.agent_flavor_id
+  external_net_name =dependency.prerequisites.outputs.external_net_name
 }

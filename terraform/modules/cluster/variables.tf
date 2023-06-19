@@ -13,3 +13,7 @@ variable "agent_flavor_id" {
 variable "image_id" {
   type = string
 }
+
+variable "external_net_name" {
+  type = string
+}

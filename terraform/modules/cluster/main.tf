@@ -49,7 +49,7 @@ module "server" {
   subnet_id          = openstack_networking_subnet_v2.kubernetes.id
   security_group_ids = [module.secgroup.id]
   data_volume_size   = 1
-  floating_ip_pool   = openstack_networking_network_v2.external_net.name
+  floating_ip_pool   = var.external_net_name
 
   cluster_token          = random_password.cluster_token.result
   k3s_args                = concat(["server", "--cluster-init"], local.common_k3s_args)
@@ -70,7 +70,7 @@ module "agents" {
   subnet_id          = openstack_networking_subnet_v2.kubernetes.id
   security_group_ids = [module.secgroup.id]
   data_volume_size   = 5
-  floating_ip_pool   = openstack_networking_network_v2.external_net.name
+  floating_ip_pool   = var.external_net_name
   k3s_join_existing = true
   k3s_url           = module.server.k3s_url
   cluster_token     = random_password.cluster_token.result

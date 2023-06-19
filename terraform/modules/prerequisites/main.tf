@@ -27,6 +27,31 @@ resource "openstack_images_image_v2" "debian" {
   disk_format      = "qcow2"
 }
 
+
+resource "openstack_networking_network_v2" "external_net" {
+  name           = "external_network"
+  admin_state_up = "true"
+  external       = "true"
+  segments {
+    physical_network = "physnet1"
+    network_type     = "flat"
+  }
+}
+
+resource "openstack_networking_subnet_v2" "external_subnet" {
+  name       = "external_subnet"
+  network_id = openstack_networking_network_v2.external_net.id
+  cidr       = "10.0.2.0/24"
+  ip_version = 4
+  gateway_ip = "10.0.2.1"
+  allocation_pool {
+    start = "10.0.2.150"
+    end   = "10.0.2.199"
+  }
+  enable_dhcp = false
+}
+
+
 provider "openstack" {
   user_name   = "admin"
   tenant_name = "admin"
