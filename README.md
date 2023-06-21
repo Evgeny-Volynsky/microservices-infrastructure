@@ -7,13 +7,13 @@
 
 ## The stages of the project
 ![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/d76b89a1-9da1-413c-aa45-27f0065fb2ec)
-* Stage 1: Setting Up a Secure Kubernetes Cluster
+* **Stage 1**: Setting Up a Secure Kubernetes Cluster
 Involves setting up a secure Kubernetes cluster on top of OpenStack. This setup aims to use LRZ resources efficiently to provide fast microservice deployment, workload scalability, and efficient resource utilization.
-* Stage 2: Secure State Management of Microservices
+* **Stage 2**: Secure State Management of Microservices
 Focuses on secure state management of microservices. This is achieved by leveraging hardware-assisted trusted computing, such as AMD SEV, to provide a secure execution environment and state management on the untrusted storage medium.
-* Stage 3: Testing Mechanism for Microservices
+* **Stage 3**: Testing Mechanism for Microservices
 Involves developing a testing mechanism to improve the reliability of microservices. This is done by combining fuzz testing and crash faults injections to expose potential issues and assess the system's resilience.
-* Stage 4: Security Review of GHGA Microservice Architecture
+* **Stage 4**: Security Review of GHGA Microservice Architecture
 Thorough security review of the GHGA microservice architecture. This review aims to identify and address potential security vulnerabilities in the system.
 
 ## Stage 1: Setting Up Secure Kubernetes Cluster
