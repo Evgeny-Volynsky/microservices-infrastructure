@@ -1,6 +1,23 @@
 # Development and Automation of Reliable Cloud Infrastructure for Scalable Microservices Deployment
-Development and Automation of Reliable Cloud Infrastructure for Scalable Microservices Deployment
-![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/e169a8aa-80cc-4b59-835e-7cba826016a8)
+## The goals of the project
+* Prototype the secure, reliable, and scalable infrastructure of the GHGA Munich data hub at the LRZ
+* Leverage AMD-SEV encryption in the development and implementation of the data hub's infrastructure
+* Review the already developed microservice architecture from a security point of view.
+* Prototype a framework on how to test the microservice architecture
+
+## The stages of the project
+![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/d76b89a1-9da1-413c-aa45-27f0065fb2ec)
+* Stage 1: Setting Up a Secure Kubernetes Cluster
+Involves setting up a secure Kubernetes cluster on top of OpenStack. This setup aims to use LRZ resources efficiently to provide fast microservice deployment, workload scalability, and efficient resource utilization.
+* Stage 2: Secure State Management of Microservices
+Focuses on secure state management of microservices. This is achieved by leveraging hardware-assisted trusted computing, such as AMD SEV, to provide a secure execution environment and state management on the untrusted storage medium.
+* Stage 3: Testing Mechanism for Microservices
+Involves developing a testing mechanism to improve the reliability of microservices. This is done by combining fuzz testing and crash faults injections to expose potential issues and assess the system's resilience.
+* Stage 4: Security Review of GHGA Microservice Architecture
+Thorough security review of the GHGA microservice architecture. This review aims to identify and address potential security vulnerabilities in the system.
+
+## Stage 1: Setting Up Secure Kubernetes Cluster
+![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/cace9552-3720-4939-aed7-edc87f85c1fc)
 The sequence diagram illustrates the process of setting up a secure Kubernetes cluster as part of Stage 1: Setting Up Secure Kubernetes Cluster. The diagram showcases the components involved and the sequence of actions performed during the setup process.
 
 1. **Ansible:** The process starts with Ansible, a configuration management and automation tool. Ansible is responsible for installing a multi-node OpenStack infrastructure.
