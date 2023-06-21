@@ -1,6 +1,6 @@
 # Development and Automation of Reliable Cloud Infrastructure for Scalable Microservices Deployment
 ## The goals of the project
-* Prototype the secure, reliable, and scalable infrastructure of the GHGA Munich data hub at the LRZ
+* Prototype the secure, reliable, and scalable infrastructure of the data hub at cloud
 * Leverage AMD-SEV encryption in the development and implementation of the data hub's infrastructure
 * Review the already developed microservice architecture from a security point of view.
 * Prototype a framework on how to test the microservice architecture
