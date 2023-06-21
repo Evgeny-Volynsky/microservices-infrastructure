@@ -37,6 +37,9 @@ sudo apt-get install -y git python3-dev libffi-dev gcc libssl-dev python3-selinu
 echo "Which IP address should we use for kolla_internal_vip_address?"
 export IP_ADDRESS=$(gum choose --item.foreground 250 $(echo $(ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'))) 
 
+echo "Which interface should we use for kolla internal communication (same for all nodes)?"
+export INTERFACE=$(gum input --prompt "Enter the number of compute nodes:")
+
 echo "How many compute nodes you would like to setup?"
 NO_COMPUTE_NODES=$(gum input --prompt "Enter the number of compute nodes:")
 
@@ -141,7 +144,7 @@ cd /home/kolla
 ip_addresses_compute_nodes_string=$(declare -p ip_addresses_compute_nodes)
 ip_addresses_compute_nodes_string=${ip_addresses_compute_nodes_string#declare -ax ip_addresses_compute_nodes=}
 export ip_addresses_compute_nodes_string=$ip_addresses_compute_nodes_string
-sudo -u kolla --preserve-env=IP_ADDRESS,CEPH_NODE_IP,CONTROL_IP,ip_addresses_compute_nodes_string ./kolla-control.sh
+sudo -u kolla --preserve-env=IP_ADDRESS,CEPH_NODE_IP,CONTROL_IP,ip_addresses_compute_nodes_string,INTERFACE ./kolla-control.sh
 
 # Add netowrking rules required on reboot for openstack
 sudo bash -c 'cat << EOF >> /opt/network.sh
