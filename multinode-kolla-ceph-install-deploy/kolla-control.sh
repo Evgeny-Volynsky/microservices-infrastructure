@@ -143,3 +143,6 @@ kolla-ansible -i ./multinode bootstrap-servers
 kolla-ansible -i ./multinode prechecks
 
 kolla-ansible -i ./multinode deploy
+
+# Install the OpenStack client
+pip install python-openstackclient -c https://releases.openstack.org/constraints/upper/master
