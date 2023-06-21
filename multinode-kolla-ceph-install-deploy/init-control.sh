@@ -114,7 +114,6 @@ sudo bash -c 'cat << EOF > /etc/systemd/system/tap-interface.service
 Description=Create persistent tap interface
 
 [Service]
-ExecStartPre=/bin/bash -c "(while ! ip link show br-ex > /dev/null 2>&1; do echo Waiting; sleep 2; done); sleep 2"
 ExecStart=/opt/network.sh
 ExecStop=/sbin/ip link set dev br_ex_port down
 RemainAfterExit=yes
@@ -145,6 +144,7 @@ sudo -u kolla --preserve-env=IP_ADDRESS,CEPH_NODE_IP,CONTROL_IP,ip_addresses_com
 
 # Add netowrking rules required on reboot for openstack
 sudo bash -c 'cat << EOF >> /opt/network.sh
+(while ! ip link show br-ex > /dev/null 2>&1; do echo Waiting; sleep 2; done); sleep 2
 sudo ifconfig br-ex \$EXT_NET_GATEWAY netmask 255.255.255.0 up
 sudo iptables -t nat -A POSTROUTING -s \$EXT_NET_CIDR -o eth0 -j MASQUERADE
 sudo sysctl -w net.ipv4.ip_forward=1
@@ -154,10 +154,3 @@ EOF'
 
 systemctl daemon-reload
 systemctl enable tap-interface
-
-
-sudo ifconfig br-ex $EXT_NET_GATEWAY netmask 255.255.255.0 up
-sudo iptables -t nat -A POSTROUTING -s $EXT_NET_CIDR -o eth0 -j MASQUERADE
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo iptables -A FORWARD -o eth0 -i br-ex -j ACCEPT
-sudo iptables -A FORWARD -i eth0 -o br-ex -j ACCEPT
