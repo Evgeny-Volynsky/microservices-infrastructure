@@ -16,8 +16,9 @@ To run the provided scripts, you have to install the following packages:
 Before running terragrunt, we need to expose 2 environment variables:
 
 
-`export OS_AUTH_URL`: should be in the pattern of `http://{CONTROL_NODE_IP}:5000/v3
-`export OS_PASSWORD`: password set for admin user : `cat /etc/kolla/passwords.yml | grep "keystone_admin_password"`
+`export OS_AUTH_URL=`: should be in the pattern of `http://{CONTROL_NODE_IP}:5000/v3`
+
+`export OS_PASSWORD=`: password set for admin user : `cat /etc/kolla/passwords.yml | grep "keystone_admin_password"`
 
 
 To deploy a k3s cluster with Terraform on OpenStack we have to do the following steps:
@@ -40,12 +41,12 @@ To retrieve the kubeconfig run
 
 ```bash
   terragrunt output kubeconfig
+```
+add contents of output into file
+```bash
   mkdir ~/.kube
   touch ~/.kube/config
 ```
-add contents of output into file
-
-
 To deploy a Kubernetes test app (located in microservices-infrastructure/test-deployment.yaml) 
 
 ```bash
