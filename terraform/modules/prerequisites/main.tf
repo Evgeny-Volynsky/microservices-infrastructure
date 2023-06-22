@@ -1,7 +1,7 @@
 resource "openstack_compute_flavor_v2" "server_flavor" {
   name  = "server-flavor"
-  ram   = "4096"
-  vcpus = "2"
+  ram   = "8192"
+  vcpus = "4"
   disk  = "20"
 
   extra_specs = {
@@ -11,8 +11,8 @@ resource "openstack_compute_flavor_v2" "server_flavor" {
 
 resource "openstack_compute_flavor_v2" "agent_flavor" {
   name  = "agent-flavor"
-  ram   = "4096"
-  vcpus = "2"
+  ram   = "8192"
+  vcpus = "4"
   disk  = "20"
 
   extra_specs = {

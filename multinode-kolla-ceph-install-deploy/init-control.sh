@@ -38,7 +38,7 @@ echo "Which IP address should we use for kolla_internal_vip_address?"
 export IP_ADDRESS=$(gum choose --item.foreground 250 $(echo $(ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}'))) 
 
 echo "Which interface should we use for kolla internal communication (same for all nodes)?"
-export INTERFACE=$(gum input --prompt "Enter the number of compute nodes:")
+export INTERFACE=$(gum input --prompt "Enter the interface we should use for kolla internal communication (same for all nodes):")
 
 echo "How many compute nodes you would like to setup?"
 NO_COMPUTE_NODES=$(gum input --prompt "Enter the number of compute nodes:")
@@ -157,3 +157,9 @@ EOF'
 
 systemctl daemon-reload
 systemctl enable tap-interface
+
+sudo ifconfig br-ex $EXT_NET_GATEWAY netmask 255.255.255.0 up
+sudo iptables -t nat -A POSTROUTING -s $EXT_NET_CIDR -o eth0 -j MASQUERADE
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -A FORWARD -o eth0 -i br-ex -j ACCEPT
+sudo iptables -A FORWARD -i eth0 -o br-ex -j ACCEPT
