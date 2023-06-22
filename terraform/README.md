@@ -66,12 +66,9 @@ and the port used by the service:
 
 Here you can see some examples and how to understand the kubectl output
 
-<img width="896" alt="control-plane-ip" src="https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/16737171/42b77ad6-fcbc-43b3-abba-b243ae169a32">
-
-<br />
-
-<img width="581" alt="service-port" src="https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/16737171/05b77f12-5ac6-409f-b2da-a7db3a96f497">
-
+<img width="581" alt="Screenshot 2023-05-31 at 11 55 21" src="https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/16737171/130b5517-f92d-481e-9770-31fad8369e47">
+<br /> <br />
+<img width="896" alt="Screenshot 2023-05-31 at 11 55 13" src="https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/16737171/1ec5169a-b22a-405b-bf35-840c2df61164">
 <br/>
 
 Now, we ssh tunnel into our cluster using the following command with the respective cluster_ip and service_port that we found out in the previous step:
