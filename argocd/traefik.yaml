@@ -1,0 +1,35 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: kube-system
+status:
+  jobName: helm-install-traefik
+spec:
+  chart: https://traefik.github.io/charts/traefik/traefik-20.3.1.tgz
+  set:
+    global.systemDefaultRegistry: ''
+  valuesContent: |-
+    providers:
+      kubernetesIngress:
+        publishedService:
+          enabled: true
+    priorityClassName: "system-cluster-critical"
+    image:
+      name: "rancher/mirrored-library-traefik"
+      tag: "2.9.4"
+    tolerations:
+    - key: "CriticalAddonsOnly"
+      operator: "Exists"
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/master"
+      operator: "Exists"
+      effect: "NoSchedule"
+    service:
+      ipFamilyPolicy: "PreferDualStack"
+    additionalArguments:
+      - --certificatesresolvers.le.acme.tlschallenge
+      - --certificatesresolvers.le.acme.email=iulia.cornea99@gmail.com
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
