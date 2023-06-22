@@ -13,11 +13,11 @@ To run the provided scripts, you have to install the following packages:
 
 ## Deployment
 
-expose 2 environment variables:
+Before running terragrunt, we need to expose 2 environment variables:
 
 
-`OS_AUTH_URL`: should be in the pattern of `http://{CONTROL_NODE_IP}:5000/v3
-`OS_PASSWORD`: password set for admin user : `cat /etc/kolla/passwords.yml | grep "keystone_admin_password"`
+`export OS_AUTH_URL`: should be in the pattern of `http://{CONTROL_NODE_IP}:5000/v3
+`export OS_PASSWORD`: password set for admin user : `cat /etc/kolla/passwords.yml | grep "keystone_admin_password"`
 
 
 To deploy a k3s cluster with Terraform on OpenStack we have to do the following steps:
