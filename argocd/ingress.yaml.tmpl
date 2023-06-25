@@ -23,13 +23,13 @@ metadata:
 spec:
   routes:
     - kind: Rule
-      match: Host(`thesis.iulia.live`)
+      match: Host(`$HOST_NAME`)
       priority: 10
       services:
         - name: argo-argocd-server
           port: 80
     - kind: Rule
-      match: Host(`thesis.iulia.live`) && Headers(`Content-Type`, `application/grpc`)
+      match: Host(`$HOST_NAME`) && Headers(`Content-Type`, `application/grpc`)
       priority: 11
       services:
         - name: argo-argocd-server

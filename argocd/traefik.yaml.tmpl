@@ -31,5 +31,7 @@ spec:
       ipFamilyPolicy: "PreferDualStack"
     additionalArguments:
       - --certificatesresolvers.le.acme.tlschallenge
-      - --certificatesresolvers.le.acme.email=iulia.cornea99@gmail.com
-      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.le.acme.email=$SSL_EMAIL
+      - --certificatesresolvers.le.acme.storage=/data/acme.json
+    persistence:
+     enabled: true

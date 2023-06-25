@@ -6,8 +6,13 @@ This guide will take you through the steps to install ArgoCD on a K3s cluster us
 Assumptions:
 
 - A K3s cluster is already set up.
+## Step 1: supply host name and TLS email address
+Run the `argo.sh` script in this directory to create the files referenced below.
+It will ask for the host name to be used and then prepare the files to use the supplied hostname
+It will also ask for an email to use for Let's Encrypt HTTP01 Acme Certificate Requests.
 
-## Step 1: Install ArgoCD
+
+## Step 2: Install ArgoCD
 
 We'll use Helm to install ArgoCD.
 
@@ -32,7 +37,7 @@ Alternatively, you can simply run :
 
 ```
 
-## Step 2: Expose ArgoCD with Traefik Ingress
+## Step 3: Expose ArgoCD with Traefik Ingress
 
 We'll create a Traefik IngressRoute to expose the ArgoCD service.
 
