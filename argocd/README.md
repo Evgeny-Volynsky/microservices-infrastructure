@@ -58,9 +58,45 @@ We'll create a Traefik IngressRoute to expose the ArgoCD service.
    kubectl apply -f ingress.yaml
    ```
 
+## ArgoCD Roles
+
+In the Base Configuration we use github as our oauth provider with a github organization
+See https://dexidp.io/docs/connectors/ for other connectors compatible.
+
+The RBAC configuration is done in the policy.csv file in an argocd (configmap)[https://github.com/Evgeny-Volynsky/microservices-infrastructure/blob/main/argocd/helm-argo.yaml.tmpl#L33].
+
+to add new groups with github define policies for the group like this 
+
+ ```csv
+          p, role:developer, applications, get, */*, allow
+          p, role:developer, applications, create, */*, allow
+          p, role:developer, applications, update, */*, allow
+          p, role:developer, logs, get, */*, allow
+          p, role:developer, exec, create, */*, allow
+          p, role:devops, applications, get, */*, allow
+          p, role:devops, applications, update, */*, allow
+          p, role:devops, applications, sync, */*, allow
+          p, role:devops, applications, override, */*, allow
+          p, role:devops, logs, get, */*, allow,
+          p, role:devops, exec, create, */*, allow
+
+     
+   ```
+
+  and then apply them to the mapped organization team:
+  ```csv
+            g, organizationName:Developers, role:developer
+            g, organizationName:DevOps, role:devops
+  ```
+  
+
+
+
+
 ---
 
 **Note**: 
+
 You should adapt the given host to your own host in the ingress.yaml, argo.yaml and helm-argo.yaml. (This will be soon adapted)
 
 These steps are a simplified version of the installation process. For a production-grade setup, you should consider configuring resource limits, readiness probes, and other Kubernetes best practices. Also, make sure to secure your ArgoCD instance by setting up authentication and authorization.
