@@ -1,7 +1,7 @@
 
 # Deploying ArgoCD on a K3s Cluster using Helm
 
-This guide will take you through the steps to install ArgoCD on a K3s cluster using Helm and the App of Apps pattern. We will also configure Traefik as the ingress controller.
+This guide will take you through the steps to install ArgoCD on a K3s cluster using Helm. We will also configure Traefik as the ingress controller.
 
 Assumptions:
 
