@@ -45,11 +45,12 @@ We'll create a Traefik IngressRoute to expose the ArgoCD service.
    we can find the ip and port Traefik is listening to like this
 
    ```bash
-   traefik_uri=kubectl get svc/traefik -n kube-system -o=jsonpath='{.status.loadBalancer.ingress[0].ip}''{":"}''{.spec.ports[?(@.port==443)].nodePort}'
+   traefik_uri=$(kubectl get svc/traefik -n kube-system -o=jsonpath='{.status.loadBalancer.ingress[0].ip}''{":"}''{.spec.ports[?(@.port==443)].nodePort}')
    ```
 
    we can expose Traefik like list 
    ```bash
+   export PUBLIC_IP=... (public ip of the controller)
    iptables -t nat -A PREROUTING -p tcp --dport 443 -d $PUBLIC_IP -j DNAT --to-destination $traefik_uri
    ```
 3. Apply this configuration with kubectl:
