@@ -18,7 +18,7 @@ We'll use Helm to install ArgoCD.
 
 if helm is not installed:
 
-`snap install helm`
+`snap install helm --classic`
 
 1. Add the ArgoCD Helm chart repository:
    ```bash
