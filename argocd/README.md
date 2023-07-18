@@ -33,15 +33,20 @@ if helm is not installed:
    ```
 Alternatively, you can simply run :
 ```bash
-   kubectl apply -f argo-helm.yaml
+   kubectl apply -f helm-argo.yaml
 
 ```
 
 ## Step 3: Expose ArgoCD with Traefik Ingress
 
 We'll create a Traefik IngressRoute to expose the ArgoCD service.
+1. Enable Let's Encrypt with Traefik by:
+```bash
+   kubectl apply -f traefik.yaml
 
-1. make sure our ingress is reachable:
+```
+
+2. Make sure our ingress is reachable:
    we can find the ip and port Traefik is listening to like this
 
    ```bash
