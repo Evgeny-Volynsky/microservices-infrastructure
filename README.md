@@ -1,4 +1,10 @@
 # Development and Automation of Reliable Cloud Infrastructure for Scalable Microservices Deployment
+## Table of Contents
+1. [The goals of the project](#the-goals-of-the-project)
+2. [The stages of the project](#the-stages-of-the-project)
+   - [Stage 1 in Detail: Setting Up Secure Kubernetes Cluster](#stage-1-in-detail-setting-up-secure-kubernetes-cluster)
+4. [The structure of the project](#the-structure-of-the-project)
+
 ## The goals of the project
 * Prototype the secure, reliable, and scalable infrastructure of the data hub at cloud
 * Leverage AMD-SEV encryption in the development and implementation of the data hub's infrastructure
@@ -7,17 +13,15 @@
 
 ## The stages of the project
 ![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/d76b89a1-9da1-413c-aa45-27f0065fb2ec)
-* **Stage 1**: Setting Up a Secure Kubernetes Cluster![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/37aea9fa-0b29-4af6-b5a8-fa45af21ad88)
-Involves setting up a secure Kubernetes cluster on top of OpenStack. This setup aims to use LRZ resources efficiently to provide fast microservice deployment, workload scalability, and efficient resource utilization.
-* **Stage 2**: Secure State Management of Microservices ![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/b7fb573f-4010-45f7-be0d-2d101cd10617)
 
-Focuses on secure state management of microservices. This is achieved by leveraging hardware-assisted trusted computing, such as AMD SEV, to provide a secure execution environment and state management on the untrusted storage medium.
+* **Stage 1**: Setting Up a Secure Kubernetes Cluster. Involves setting up a secure Kubernetes cluster on top of OpenStack. This setup aims to use LRZ resources efficiently to provide fast microservice deployment, workload scalability, and efficient resource utilization.
+* **Stage 2**: Secure State Management of Microservices. Focuses on secure state management of microservices. This is achieved by leveraging hardware-assisted trusted computing, such as AMD SEV, to provide a secure execution environment and state management on the untrusted storage medium.
 * **Stage 3**: Testing Mechanism for Microservices
 Involves developing a testing mechanism to improve the reliability of microservices. This is done by combining fuzz testing and crash faults injections to expose potential issues and assess the system's resilience.
 * **Stage 4**: Security Review of GHGA Microservice Architecture
 Thorough security review of the GHGA microservice architecture. This review aims to identify and address potential security vulnerabilities in the system.
 
-## Stage 1: Setting Up Secure Kubernetes Cluster
+### Stage 1 in Detail: Setting Up Secure Kubernetes Cluster
 ![image](https://github.com/Evgeny-Volynsky/microservices-infrastructure/assets/10652693/cace9552-3720-4939-aed7-edc87f85c1fc)
 The sequence diagram illustrates the process of setting up a secure Kubernetes cluster as part of Stage 1: Setting Up Secure Kubernetes Cluster. The diagram showcases the components involved and the sequence of actions performed during the setup process.
 
@@ -34,3 +38,6 @@ The sequence diagram illustrates the process of setting up a secure Kubernetes c
 6. **ArgoCD:** ArgoCD is a GitOps tool used for continuous integration and continuous deployment (CI/CD). It integrates with the Kubernetes Cluster to enable GitOps workflows, allowing for automated deployments and management of microservices.
 
 7. **Microservices:** The diagram represents the automatic deployment of microservices on the Kubernetes Cluster. These microservices are the applications and services that will run within the cluster, providing the desired functionality.
+
+## The structure of the project
+
