@@ -65,7 +65,7 @@ We'll create a Traefik IngressRoute to expose the ArgoCD service.
    ```
 4. To access the argocd dashboard as an admin, you should run the following command that retrieves the login details as yaml. Then you should decode it from base64:
    ```bash
-  kubectl get secret argocd-initial-admin-secret -o yaml -n argocd
+     kubectl get secret argocd-initial-admin-secret -o yaml -n argocd
    ```
 
 ## ArgoCD Roles
