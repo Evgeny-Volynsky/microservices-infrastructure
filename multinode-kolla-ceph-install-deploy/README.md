@@ -87,6 +87,9 @@ To change / add new ssh key. You can add the following line in the `init-control
 
 To be able to access OpenStack CLI, you should run: 
 ```bash
+  cd /home/kolla
+  source kolla-venv/bin/activate
+  kolla-ansible post-deploy
   source /etc/kolla/admin-openrc.sh 
 ```
 
