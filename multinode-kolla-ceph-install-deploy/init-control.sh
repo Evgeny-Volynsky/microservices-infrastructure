@@ -2,7 +2,7 @@
 set -x -o errexit -o nounset -o pipefail
 
 # Add a user named 'kolla' with no password
-if ! id "$username" >/dev/null 2>&1; then
+if ! id "kolla" >/dev/null 2>&1; then
     # Create the user 'kolla'
     sudo useradd -m kolla
 
