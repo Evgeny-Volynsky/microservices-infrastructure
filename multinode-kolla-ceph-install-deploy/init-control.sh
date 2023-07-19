@@ -2,7 +2,13 @@
 set -x -o errexit -o nounset -o pipefail
 
 # Add a user named 'kolla' with no password
-sudo useradd -m kolla
+if id "kolla" >/dev/null 2>&1; then
+    echo "User 'kolla' already exists"
+else
+    # Create the user 'kolla'
+    sudo useradd -m kolla
+    echo "User 'kolla' created successfully"
+fi
 
 # Grant 'kolla' user sudo privileges
 echo 'kolla ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/kolla
