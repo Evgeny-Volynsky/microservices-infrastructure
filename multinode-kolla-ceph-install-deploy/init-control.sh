@@ -29,7 +29,7 @@ echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *
 # Update package list
 sudo apt update
 # Install necessary packages
-sudo apt-get install -y git python3-dev libffi-dev gcc libssl-dev python3-selinux python3-setuptools python3-venv net-tools gum
+sudo apt-get install -y git python3-dev libffi-dev gcc libssl-dev python3-selinux python3-setuptools python3-venv net-tools gum iproute2
 
 # echo "Which Device should we use for cinder volumes?" 
 # CINDER_PARTITION=$(gum choose --item.foreground 250 $(echo $(lsblk -o NAME -n -l -s| grep -E '^s|^v')))
